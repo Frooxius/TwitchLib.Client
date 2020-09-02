@@ -44,14 +44,14 @@ namespace TwitchLib.Client.Test
         public void Dispose(bool waitForSendsToComplete)
         { }
 
-        public bool Open()
+        public async Task<bool> Open()
         {
             IsConnected = true;
             OnConnected?.Invoke(this, new OnConnectedEventArgs());
             return true;
         }
 
-        public void Reconnect()
+        public async Task Reconnect()
         {
             IsConnected = true;
             OnReconnected?.Invoke(this, new OnReconnectedEventArgs());

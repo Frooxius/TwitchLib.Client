@@ -93,7 +93,10 @@ namespace TwitchLib.Client.Models.Common
 
         public static bool ConvertToBool(string data)
         {
-            return data == "1";
+            if (int.TryParse(data, out int value) && value > 0)
+                return true;
+
+            return false;
         }
     }
 }

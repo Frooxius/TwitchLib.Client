@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
+using System.Threading.Tasks;
 using TwitchLib.Client.Enums;
 using TwitchLib.Client.Enums.Internal;
 using TwitchLib.Client.Events;
@@ -455,7 +456,8 @@ namespace TwitchLib.Client
                 switch (_protocol)
                 {
                     case ClientProtocol.TCP:
-                        _client = new TcpClient();
+                        //_client = new TcpClient();
+                        throw new NotSupportedException("TcpClient not supported");
                         break;
                     case ClientProtocol.WebSocket:
                         _client = new WebSocketClient();
@@ -578,16 +580,18 @@ namespace TwitchLib.Client
         /// <summary>
         /// Start connecting to the Twitch IRC chat.
         /// </summary>
-        public void Connect()
+        public async Task<bool> Connect()
         {
             if (!IsInitialized) HandleNotInitialized();
             Log($"Connecting to: {ConnectionCredentials.TwitchWebsocketURI}");
 
-			// Clear instance data
+            // Clear instance data
             _joinedChannelManager.Clear();
-            _client.Open();
+            var result = await _client.Open().ConfigureAwait(false);
 
             Log("Should be connected!");
+
+            return result;
         }
 
         /// <summary>
@@ -608,12 +612,12 @@ namespace TwitchLib.Client
         /// <summary>
         /// Start reconnecting to the Twitch IRC chat.
         /// </summary>
-        public void Reconnect()
+        public Task Reconnect()
         {
             if (!IsInitialized) HandleNotInitialized();
             Log($"Reconnecting to Twitch");
             _joinedChannelManager.Clear();
-            _client.Reconnect();
+            return _client.Reconnect();
         }
         #endregion
 

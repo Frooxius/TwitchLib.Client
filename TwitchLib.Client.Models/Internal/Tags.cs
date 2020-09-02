@@ -15,6 +15,7 @@
         public const string EmoteOnly = "emote-only";
         public const string EmotesSets = "emote-sets";
         public const string FollowersOnly = "followers-only";
+        public const string Founder = "founder";
         public const string Id = "id";
         public const string Login = "login";
         public const string Mercury = "mercury";
