@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 using TwitchLib.Communication.Events;
 using TwitchLib.Communication.Interfaces;
 
